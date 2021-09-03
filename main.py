@@ -25,14 +25,21 @@ class RoseTree:
         1
         >>> ababcaa.get_value_at([1,2])
         5
+        >>> abca.get_value_at([1,2,3])
+        that rose doesn't exist
         """
         if list_path_to_target == []:
             return self.get_value()
         else:
-            # use try / except
             # could I use tail recursion here?
-            first_subtree, *rest_of_path = list_path_to_target
-            return self.subtrees[first_subtree].get_value_at(rest_of_path)
+            try:
+                first_subtree, *rest_of_path = list_path_to_target
+                return self.subtrees[first_subtree].get_value_at(rest_of_path)
+            except IndexError:
+                print("that rose doesn't exist")
+
+
+    #def replace_value_at
             
 
 
@@ -59,6 +66,7 @@ if __name__ == "__main__":
 
 
     import doctest
+    doctest.IGNORE_EXCEPTION_DETAIL
     doctest.testmod(extraglobs={
         'a'       : a,
         'b'       : b,
