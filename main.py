@@ -70,11 +70,14 @@ class RoseTree:
         return self 
 
     def replace_value_at(self, new_value, list_path_to_target=[]):
+        """
+        >>> a.replace_value_at(0).get_value()
+        0
+        >>> a.replace_value_at(0).equal_by_value(RoseTree(0))
+        True
+        """
         return self
             
-
-
-
 
 
 if __name__ == "__main__":
