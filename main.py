@@ -8,18 +8,25 @@ class RoseTree:
         self.value = value 
         self.subtrees = subtrees
 
+
     def equal_by_value(self, rosetree):
         """
         >>> a.equal_by_value(a)
         True
         >>> a.equal_by_value(b)
         False
+        >>> ababcaa.equal_by_value(b)
+        False
+        >>> ababcaa.equal_by_value(ababcaa)
+        True
         """
-        top_level_equal = self.value == rosetree.get_value()
+        top_level_equal = self.get_value() == rosetree.get_value()
         subtrees_equal = True
         # this could be reduce / code that short circuits on False
         for i in range(len(self.subtrees)):
-            if self.get_subtrees()[i].equal_by_value(rosetree.get_subtrees()[i]):
+            if len(self.get_subtrees()) != len(rosetree.get_subtrees()):
+                return False
+            elif self.get_subtrees()[i].equal_by_value(rosetree.get_subtrees()[i]):
                 pass
             else:
                 subtrees_equal = False
@@ -91,25 +98,42 @@ class RoseTree:
         finally:
             return self
 
+#        >>> a.insert_tree_at(a, [9]).equal_by_value(RoseTree(5, [a])) 
+#        True
+#        >>> ababcaa.insert_tree_at(a, [0]).equal_by_value(RoseTree(7, [a,c,a]))
+#        True
+#        >>> ababcaa.insert_tree_at(a, [1,1]).equal_by_value(RoseTree(7, [ab,RoseTree(2, [ab,a,a]),a]))
+#        True
+#        >>> ababcaa.insert_tree_at(ababcaa, [1,1]).equal_by_value(RoseTree(7, [ab,RoseTree(2, [ab,ababcaa,a]),a]))
+#        True
+#        >>> abca.insert_tree_at(a, [1,2,3]).equal_by_value(abca)
+#        that rose path doesn't exist
+#        True
+
     # list_path_indexes_to_target must be exact path
     def insert_tree_at(self, tree, list_path_indexes_to_target):
         """
         >>> a.insert_tree_at(a, [0]).equal_by_value(RoseTree(5, [a])) 
-        True 
-        >>> a.insert_tree_at(a, [9]).equal_by_value(RoseTree(5)) 
-        that path doesn't exist
-        True 
-        >>> ababcaa.insert_tree_at(ababcaa, [1,1]).equal_by_value(RoseTree(7, [ab,RoseTree(2, [ab,ababcaa,c,a]),a]))
-        True
-        >>> abca.replace_value_at(a, [1,2,3]).equal_by_value(abca)
-        that rose path doesn't exist
         True
         """
-        return self
-
-
-
-
+        try:
+            if list_path_indexes_to_target == []:
+                print("need to specify a rose location")
+                return self
+            elif len(list_path_indexes_to_target) == 1:
+                spec_position = list_path_indexes_to_target[0]
+                subtrees_size = len(self.get_subtrees())
+                if spec_position >= subtrees_size:
+                    self.subtrees.append(tree)
+                else:
+                    self.subtrees[spec_position] = tree
+            else:
+                first_subtree_index, *rest_of_path_indexes = list_path_indexes_to_target
+                self.get_subtrees()[first_subtree_index].insert_tree_at(tree, rest_of_path_indexes)
+        except IndexError:
+            print("that rose path doesn't exist")
+        finally:
+            return self
 
 
 

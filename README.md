@@ -10,3 +10,6 @@ This avoids unnecessary waste of space and time if you were to copy the subtree.
 I'm making some assumptions about how the API should behave
 	- what is returned by the method call when no obvious return value
 	- how to handle ambiguous input cases (ex. where to insert tree if path isn't exact)
+	- when inserting a tree at a location, if a tree exists at that location, I'll replace it. If no tree exists at that location, I'll insert it as the last subtree (which is not necessarily the absolute specified position). If you're specifiying a location deeper than the tree, don't insert
+
+I'm also not type checking or doing much validation or full test coverage
