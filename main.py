@@ -36,7 +36,7 @@ class RoseTree:
         """
         return self.value
 
-    def get_value_at(self, list_path_to_target=[]):
+    def get_value_at(self, list_path_indexes_to_target=[]):
         """
         >>> abca.get_value_at()
         2
@@ -49,13 +49,13 @@ class RoseTree:
         >>> abca.get_value_at([1,2,3])
         that rose doesn't exist
         """
-        if list_path_to_target == []:
+        if list_path_indexes_to_target == []:
             return self.get_value()
         else:
             # could I use tail recursion here?
             try:
-                first_subtree, *rest_of_path = list_path_to_target
-                return self.subtrees[first_subtree].get_value_at(rest_of_path)
+                first_subtree_index, *rest_of_path_indexes = list_path_indexes_to_target
+                return self.subtrees[first_subtree_index].get_value_at(rest_of_path_indexes)
             except IndexError:
                 print("that rose doesn't exist")
 
@@ -69,13 +69,20 @@ class RoseTree:
         self.value = new_value
         return self 
 
-    def replace_value_at(self, new_value, list_path_to_target=[]):
+    def replace_value_at(self, new_value, list_path_indexes_to_target=[]):
         """
         >>> a.replace_value_at(0).get_value()
         0
         >>> a.replace_value_at(0).equal_by_value(RoseTree(0))
         True
+        >>> ababcaa.replace_value_at(3, [1,0]).get_value_at([1,0])
+        3
         """
+        if list_path_indexes_to_target == []:
+            self.replace_value(new_value)
+        else:
+            first_subtree_index, *rest_of_path_indexes = list_path_indexes_to_target
+            self.get_subtrees()[first_subtree_index].replace_value_at(new_value, rest_of_path_indexes)
         return self
             
 
