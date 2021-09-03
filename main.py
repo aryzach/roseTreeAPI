@@ -77,14 +77,25 @@ class RoseTree:
         True
         >>> ababcaa.replace_value_at(3, [1,0]).get_value_at([1,0])
         3
+        >>> abca.replace_value_at(30, [1,2,3]) == abca
+        that rose doesn't exist
+        True
         """
-        if list_path_indexes_to_target == []:
-            self.replace_value(new_value)
-        else:
-            first_subtree_index, *rest_of_path_indexes = list_path_indexes_to_target
-            self.get_subtrees()[first_subtree_index].replace_value_at(new_value, rest_of_path_indexes)
-        return self
-            
+        try:
+            if list_path_indexes_to_target == []:
+                self.replace_value(new_value)
+            else:
+                first_subtree_index, *rest_of_path_indexes = list_path_indexes_to_target
+                self.get_subtrees()[first_subtree_index].replace_value_at(new_value, rest_of_path_indexes)
+        except IndexError:
+            print("that rose doesn't exist")
+        finally:
+            return self
+
+
+
+
+
 
 
 if __name__ == "__main__":
