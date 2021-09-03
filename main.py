@@ -1,4 +1,4 @@
-
+import copy
 
 class RoseTree:
     """
@@ -98,23 +98,25 @@ class RoseTree:
         finally:
             return self
 
-#        >>> a.insert_tree_at(a, [9]).equal_by_value(RoseTree(5, [a])) 
-#        True
-#        >>> ababcaa.insert_tree_at(a, [0]).equal_by_value(RoseTree(7, [a,c,a]))
-#        True
-#        >>> ababcaa.insert_tree_at(a, [1,1]).equal_by_value(RoseTree(7, [ab,RoseTree(2, [ab,a,a]),a]))
-#        True
-#        >>> ababcaa.insert_tree_at(ababcaa, [1,1]).equal_by_value(RoseTree(7, [ab,RoseTree(2, [ab,ababcaa,a]),a]))
-#        True
-#        >>> abca.insert_tree_at(a, [1,2,3]).equal_by_value(abca)
-#        that rose path doesn't exist
-#        True
-
     # list_path_indexes_to_target must be exact path
     def insert_tree_at(self, tree, list_path_indexes_to_target):
         """
-        >>> a.insert_tree_at(a, [0]).equal_by_value(RoseTree(5, [a])) 
+        >>> copy.deepcopy(a).insert_tree_at(a, [0]).equal_by_value(RoseTree(5, [a])) 
         True
+        >>> copy.deepcopy(a).insert_tree_at(a, [9]).equal_by_value(RoseTree(5, [a])) 
+        True
+        >>> copy.deepcopy(ababcaa).insert_tree_at(b, [2]).equal_by_value(RoseTree(7, [ab,abca,b]))
+        True
+        >>> copy.deepcopy(ababcaa).insert_tree_at(b, [1]).equal_by_value(RoseTree(7, [ab,b,a]))
+        True
+        >>> copy.deepcopy(ababcaa).insert_tree_at(a, [1,1]).equal_by_value(RoseTree(7, [ab,RoseTree(2, [ab,a,a]),a]))
+        True
+        >>> copy.deepcopy(ababcaa).insert_tree_at(ababcaa, [1,1]).equal_by_value(RoseTree(7, [ab,RoseTree(2, [ab,ababcaa,a]),a]))
+        True
+        >>> copy.deepcopy(abca).insert_tree_at(a, [1,2,3]).equal_by_value(abca)
+        that rose path doesn't exist
+        True
+
         """
         try:
             if list_path_indexes_to_target == []:
