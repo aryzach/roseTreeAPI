@@ -8,6 +8,27 @@ class RoseTree:
         self.value = value 
         self.subtrees = subtrees
 
+    def equal_by_value(self, rosetree):
+        # I could split out code used for testing into a different class
+        """
+        >>> a.equal_by_value(a)
+        True
+        >>> a.equal_by_value(b)
+        False
+        """
+        top_level_equal = self.value == rosetree.get_value()
+        subtrees_equal = True
+        # this could be reduce / code that short circuits on False
+        for i in range(len(self.subtrees)):
+            if self.get_subtrees()[i].equal_by_value(rosetree.get_subtrees()[i]):
+                pass
+            else:
+                subtrees_equal = False
+        return top_level_equal and subtrees_equal
+
+    def get_subtrees(self):
+        return self.subtrees
+
     def get_value(self):
         """
         >>> a.get_value()
@@ -38,8 +59,18 @@ class RoseTree:
             except IndexError:
                 print("that rose doesn't exist")
 
+    def replace_value(self, new_value):
+        """
+        >>> ababcaa.replace_value(6).get_value()
+        6
+        >>> ababcaa.replace_value(8).equal_by_value(RoseTree(8, [ab,abca,a]))
+        True
+        """
+        self.value = new_value
+        return self 
 
-    #def replace_value_at
+    def replace_value_at(self, new_value, list_path_to_target=[]):
+        return self
             
 
 
