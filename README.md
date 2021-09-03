@@ -6,3 +6,7 @@ I believe the best way to do this would be the following:
 	- from the new location, point to the subtree that you want to move
 	- from the old location, delete the reference to the subtree
 This avoids unnecessary waste of space and time if you were to copy the subtree. In the other methods, you are either only reading, writing (and garbage collecting), or writing, so the constraints here are not relevant. 
+
+I'm making some assumptions about how the API should behave
+	- what is returned by the method call when no obvious return value
+	- how to handle ambiguous input cases (ex. where to insert tree if path isn't exact)
